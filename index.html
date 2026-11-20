@@ -191,19 +191,86 @@ footer .brand span{background:linear-gradient(90deg,#7dd3fc,#c7d2fe);-webkit-bac
 footer .copy{font-size:18px;color:#bfdbfe}
 footer .src{font-size:16px;color:#bfdbfe;text-align:right}
 /* responsive */
-@media (max-width:700px){
-  body{font-size:18px}
-  .wrap{padding:10px 10px 0}
-  header{padding:10px 12px}.logo{width:52px;height:52px}
-  .filters{position:static}
-  .filters .f{flex:1 1 45%}.filters select{max-width:none;width:100%}
-  .filters .f:first-child{flex-basis:100%}.seg{display:flex}.seg button{flex:1;white-space:nowrap;padding:4px 10px}
-  .lede{font-size:17px}.kicker{flex-wrap:wrap}
-  .kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi{min-height:110px;padding:12px 14px}
-  .card{padding:14px}.card h2{font-size:24px}
-  .bf{grid-template-columns:1fr minmax(120px,1.4fr) 1fr}.bf .n{font-size:14px}.bf .mid{font-size:15.5px}
-  footer .src{text-align:left}
+.ftoggle,.fab,.mhint{display:none}
+.status .rows{color:var(--ink3)}
+/* touch devices: bigger targets, no hover lift */
+@media (pointer:coarse){
+  select{min-height:44px}
+  .seg button{min-height:42px}
+  .btn{min-height:44px}
+  .card:hover,.kpi:hover{transform:none;box-shadow:var(--glow)}
+  th{padding:10px 12px}
 }
+/* tablet */
+@media (max-width:1024px){
+  .wrap{padding:14px 14px 0}
+  .filters .f{flex:1 1 28%}.filters select{max-width:none;width:100%}
+  .filters .f:first-child{flex:1 1 100%}
+  .row2,.row2b{grid-template-columns:1fr}
+  .bf{grid-template-columns:1fr minmax(200px,1.3fr) 1fr}
+  .yb .nm,.ab .nm{white-space:normal}
+  .fab{display:flex;position:fixed;right:16px;bottom:18px;z-index:40;align-items:center;gap:6px;border:0;border-radius:999px;padding:10px 16px;
+       font:700 18px var(--font);color:#fff;background:linear-gradient(135deg,var(--blue2),var(--sky));box-shadow:0 10px 26px -8px rgba(37,99,235,.8);
+       opacity:0;pointer-events:none;translate:0 12px;transition:opacity .25s,translate .25s}
+  .fab.show{opacity:1;pointer-events:auto;translate:0 0}
+}
+/* phone */
+@media (max-width:700px){
+  body{font-size:19px}
+  .wrap{padding:8px 8px 0}
+  header{display:grid;grid-template-columns:52px 1fr;padding:12px;gap:6px 12px;align-items:start}.logo{width:52px;height:52px}
+  .live{grid-column:1/-1;justify-self:start}
+  .filters .f:first-child>label{display:none}
+  .hgroup{min-width:0}.kicker{flex-wrap:wrap;font-size:15px}.kicker .tag{font-size:14px}
+  .lede{font-size:16.5px}
+  .live{font-size:15px;padding:4px 12px}
+  /* filters: compact sticky bar, expandable */
+  .filters{position:sticky;top:0;border-radius:0 0 20px 20px;margin:0 -8px 12px;padding:10px 12px;gap:8px}
+  .filters .f{flex:1 1 46%}
+  .filters .f:first-child{flex:1 1 100%}
+  .seg{display:flex}.seg button{flex:1;white-space:nowrap;padding:4px 10px}
+  .ftoggle{display:flex;flex:1 1 100%;justify-content:space-between;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.85);
+           border-radius:14px;padding:6px 12px;font:700 17px var(--font);color:var(--ink2);min-height:42px;cursor:pointer}
+  .ftoggle .sum{font-weight:400;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
+  .filters.collapsed .f:not(:first-child),.filters.collapsed .status,.filters.collapsed .spacer{display:none}
+  .filters .spacer{display:none}
+  .filters .f:has(#btnXlsx){flex:1 1 100%}.filters .f:has(#btnXlsx) label{display:none}.btn{width:100%;justify-content:center}
+  .status{font-size:15px}.status .rows{display:none}
+  /* KPI */
+  .kpis{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .kpi{min-height:104px;padding:12px 12px;border-radius:20px}
+  .kpi .l{font-size:16px;padding-right:28px}.kpi .s{font-size:15.5px}.kpi .emo{font-size:22px;right:10px;top:10px}
+  .kpi .v{font-size:34px}.kpi .v.sm{font-size:22px}
+  .card{padding:14px 12px;border-radius:20px}.card h2{font-size:24px}.card h2 .emo{width:34px;height:34px;font-size:18px}
+  .card .sub{font-size:15.5px}
+  /* butterfly → stacked rows: name on top, male | female below */
+  .bf{grid-template-columns:1fr;gap:0}
+  .bf .hd{display:none}
+  .bf .rw{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"mid mid" "l r";column-gap:4px;padding:5px 0;border-bottom:1px dashed var(--line)}
+  .bf .rw .side.l{grid-area:l}.bf .rw .side.r{grid-area:r}
+  .bf .rw .mid{grid-area:mid;text-align:left;white-space:normal;font-size:17px;padding:0 0 2px}
+  .bf .bar{height:14px}.bf .n{font-size:15px}
+  /* other lists */
+  .sb{grid-template-columns:minmax(70px,auto) 1fr 70px;font-size:17px}
+  .agecols{gap:14px}
+  .share .cap{font-size:15.5px}
+  /* table: keep key columns */
+  .tablewrap{max-height:70vh}
+  table{font-size:16.5px}
+  th,td{padding:7px 8px}
+  th:nth-child(6),td:nth-child(6),th:nth-child(7),td:nth-child(7),th:nth-child(8),td:nth-child(8){display:none}
+  th:nth-child(2),td:nth-child(2){min-width:170px}
+  td .en{display:none}
+  .mhint{display:inline;color:var(--blue)}
+  th:first-child,td:first-child{padding-left:6px;padding-right:4px}
+  .note{font-size:15px}
+  footer{border-radius:20px 20px 0 0;padding:16px;margin:16px -8px 0}
+  footer .src{text-align:left;flex-basis:100%}
+  .tip{max-width:calc(100vw - 24px)}
+  .fab{bottom:14px;right:12px}
+}
+/* landscape phones: don't let sticky filters eat the screen */
+@media (max-height:500px) and (orientation:landscape){ .filters{position:static} }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;translate:none}}
 </style>
 </head>
@@ -219,9 +286,10 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
   <div class="live"><span class="dot load" id="dot"></span><span id="badgeTxt">กำลังเชื่อมต่อ…</span></div>
 </header>
 
-<div class="filters glass reveal">
+<div class="filters glass reveal collapsed" id="filters">
   <div class="f"><label>ประเภทผู้ป่วย</label>
     <div class="seg" id="segType"><button data-v="opd" class="on">ผู้ป่วยนอก</button><button data-v="ipd">ผู้ป่วยใน</button></div></div>
+  <button class="ftoggle" id="fToggle" aria-expanded="false" aria-controls="filters"><span>⚙ ตัวกรอง</span><span class="sum" id="fSum">…</span></button>
   <div class="f"><label>ปีงบประมาณ</label><select id="selYear"></select></div>
   <div class="f"><label>อำเภอ</label><select id="selDist"></select></div>
   <div class="f"><label>หน่วยบริการ</label><select id="selHosp"></select></div>
@@ -274,7 +342,7 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
 
 <section class="card reveal">
   <h2><span class="emo">📋</span>ตารางกลุ่มโรคทั้งหมด</h2>
-  <div class="sub">คลิกหัวคอลัมน์เพื่อเรียงลำดับ · ข้อมูลเดียวกับที่ Export Excel</div>
+  <div class="sub">แตะหัวคอลัมน์เพื่อเรียงลำดับ · ข้อมูลเดียวกับที่ Export Excel<span class="mhint"> · ปัดตารางซ้าย–ขวาเพื่อดูคอลัมน์อื่น ↔</span></div>
   <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
 </section>
 
@@ -291,6 +359,7 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
   <div class="src">ข้อมูล: MoPH Open Data · HDC กระทรวงสาธารณสุข</div>
 </footer>
 </div>
+<button class="fab" id="fab" aria-label="ไปที่ตัวกรอง">⚙ ตัวกรอง</button>
 <div class="tip" id="tip"></div>
 <div class="toast" id="toast"></div>
 
@@ -493,9 +562,24 @@ function countUp(){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) r
 
 /* tooltip */
 const tip=$('tip');
-document.addEventListener('mousemove',e=>{ const t=e.target.closest('[data-tip]'); if(!t){tip.style.display='none';return;}
-  tip.innerHTML=t.dataset.tip; tip.style.display='block'; const w=tip.offsetWidth,h=tip.offsetHeight;
-  let x=e.clientX+16,y=e.clientY+16; if(x+w>innerWidth-8)x=e.clientX-w-16; if(y+h>innerHeight-8)y=e.clientY-h-16; tip.style.left=x+'px'; tip.style.top=y+'px'; });
+function placeTip(t,cx,cy){ tip.innerHTML=t.dataset.tip; tip.style.display='block'; const w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=cx+16,y=cy+16; if(x+w>innerWidth-8)x=Math.max(8,cx-w-16); if(y+h>innerHeight-8)y=Math.max(8,cy-h-16); tip.style.left=x+'px'; tip.style.top=y+'px'; }
+const TOUCH = matchMedia('(hover: none)').matches;
+if(!TOUCH){
+  document.addEventListener('mousemove',e=>{ const t=e.target.closest('[data-tip]'); if(!t){tip.style.display='none';return;} placeTip(t,e.clientX,e.clientY); });
+} else {
+  // touch: tap a bar/row to see details, tap elsewhere or scroll to close
+  document.addEventListener('click',e=>{ const t=e.target.closest('[data-tip]'); if(!t){tip.style.display='none';return;} placeTip(t,e.clientX,e.clientY); });
+  addEventListener('scroll',()=>{ tip.style.display='none'; },{passive:true});
+}
+/* mobile filter panel + floating button */
+const filtersEl=$('filters');
+$('fToggle').onclick=()=>{ const open=filtersEl.classList.toggle('collapsed')===false; $('fToggle').setAttribute('aria-expanded',open); };
+$('fab').onclick=()=>{ filtersEl.classList.remove('collapsed'); $('fToggle').setAttribute('aria-expanded',true); scrollTo({top:0,behavior:'smooth'}); };
+addEventListener('scroll',()=>{ $('fab').classList.toggle('show',scrollY>600); },{passive:true});
+function updateFilterSummary(){ const s=[typeTh(state.type),'ปี '+state.year,state.dist==='all'?'ทั้งจังหวัด':DIST[state.dist]];
+  if(state.hosp!=='all') s.push(hname(state.hosp)); if(state.sex!=='all') s.push(state.sex==='1'?'ชาย':'หญิง'); s.push(state.top+' อันดับ');
+  $('fSum').textContent=s.join(' · '); }
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.style.display='block'; clearTimeout(toast._t); toast._t=setTimeout(()=>t.style.display='none',3500); }
 
 function setupControls(){
@@ -555,7 +639,8 @@ function render(){
   if(!cache[state.type]) return;
   const v=view=compute(); const {T,Y,total,totalPrev,ranked,gy,dc}=v;
   const where=whereTxt();
-  $('status').textContent=`${typeTh(T)} · ปีงบประมาณ ${Y} · ${where}${dc?' · ประมวลผลล่าสุด '+thDate(dc):''} · ${YEARS.map(y=>y+': '+fmt((cache[T][y]||[]).length)+' แถว').join('  ')}`;
+  $('status').innerHTML=`${typeTh(T)} · ปีงบประมาณ ${Y} · ${esc(where)}${dc?' · ประมวลผลล่าสุด '+thDate(dc):''}<span class="rows"> · ${YEARS.map(y=>y+': '+fmt((cache[T][y]||[]).length)+' แถว').join('  ')}</span>`;
+  updateFilterSummary();
   const male=ranked.reduce((a,o)=>a+o.m,0), fem=ranked.reduce((a,o)=>a+o.f,0);
   const chg = (Y!==CURRENT_FY && totalPrev) ? pct(total,totalPrev) : null;
   const top1=ranked[0];
