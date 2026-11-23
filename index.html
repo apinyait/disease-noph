@@ -475,11 +475,12 @@ const state = { type:'opd', year:YEARS[2], dist:'all', hosp:'all', sex:'all', to
 const cache = {}, loading = {}, ageCache = {}, ageLoading = {};
 
 /* request pacing: Open Data throttles bursts (HTTP 429) — run max 2 at a time, retry with backoff, cache 6 h */
-const CACHE_TTL=6*3600*1000, CACHE_VER='v3';
+const CACHE_TTL=30*60*1000, CACHE_VER='v3';
+const fetchedAt={}; // table:year -> time data was last fetched from the API
 let active=0; const waitQ=[];
 async function slot(fn){ if(active>=2) await new Promise(r=>waitQ.push(r)); active++; try{ return await fn(); } finally{ active--; const n=waitQ.shift(); if(n) n(); } }
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-function cacheGet(k){ try{ const o=JSON.parse(localStorage.getItem(k)||'null'); if(o&&Date.now()-o.t<CACHE_TTL) return o.d; }catch(e){} return null; }
+function cacheGet(k){ try{ const o=JSON.parse(localStorage.getItem(k)||'null'); if(o&&Date.now()-o.t<CACHE_TTL) return o; }catch(e){} return null; }
 function cacheSet(k,d){ try{ localStorage.setItem(k,JSON.stringify({t:Date.now(),d})); }catch(e){} }
 async function postJSON(body){
   for(let attempt=0;;attempt++){
@@ -493,7 +494,7 @@ async function postJSON(body){
   }
 }
 async function fetchTable(table, year){
-  const key=`nyk:${CACHE_VER}:${table}:${year}`; const hit=cacheGet(key); if(hit) return hit;
+  const key=`nyk:${CACHE_VER}:${table}:${year}`; const hit=cacheGet(key); if(hit){ fetchedAt[table+':'+year]=hit.t; return hit.d; }
   const out=[]; let offset=0; const limit=10000;
   for(let i=0;i<20;i++){
     const j=await postJSON({tableName:table,year:String(year),province:PROV,type:'json',limit,offset});
@@ -502,7 +503,7 @@ async function fetchTable(table, year){
     offset+=d.length;
     if(d.length===0 || offset>=(+j.total||0)) break;
   }
-  cacheSet(key,out);
+  cacheSet(key,out); fetchedAt[table+':'+year]=Date.now();
   return out;
 }
 function ensure(type){
@@ -611,7 +612,8 @@ function render(){
   const where=whereTxt();
   $('status').innerHTML=`${typeTh(T)} · ปีงบประมาณ ${Y} · ${esc(where)}${dc?' · ประมวลผลล่าสุด '+thDate(dc):''}<span class="rows"> · ${YEARS.map(y=>y+': '+fmt((cache[T][y]||[]).length)+' แถว').join('  ')}</span>`;
   updateFilterSummary();
-  if(dc) setBadge('','ข้อมูล ณ '+thDate(dc));
+  { const ts=YEARS.map(y=>fetchedAt[TABLES[T]+':'+y]||0); const last=Math.max(...ts);
+    if(last){ const d=new Date(last); setBadge('',`เชื่อมต่อ API ล่าสุด ${d.getDate()} ${TH_MON[d.getMonth()]} ${d.getFullYear()+543} - ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} น.`); } }
   const male=ranked.reduce((a,o)=>a+o.m,0), fem=ranked.reduce((a,o)=>a+o.f,0);
   const chg = (Y!==CURRENT_FY && totalPrev) ? pct(total,totalPrev) : null;
   const top1=ranked[0];
