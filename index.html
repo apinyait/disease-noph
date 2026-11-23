@@ -190,6 +190,43 @@ footer .brand{font-size:24px;font-weight:700;color:#fff}
 footer .brand span{background:linear-gradient(90deg,#7dd3fc,#c7d2fe);-webkit-background-clip:text;background-clip:text;color:transparent}
 footer .copy{font-size:18px;color:#bfdbfe}
 footer .src{font-size:16px;color:#bfdbfe;text-align:right}
+/* card Excel buttons */
+.card{position:relative}
+.card h2{padding-right:118px}
+.xbtn{position:absolute;right:16px;top:16px;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(37,99,235,.25);border-radius:999px;padding:3px 14px;
+  font:700 17px var(--font);color:var(--blue2);background:rgba(255,255,255,.8);cursor:pointer;overflow:hidden;transition:all .25s var(--ease)}
+.xbtn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(56,189,248,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
+.xbtn:hover{background:linear-gradient(135deg,var(--blue2),var(--sky));color:#fff;border-color:transparent;box-shadow:0 8px 20px -8px rgba(37,99,235,.8)}
+.xbtn:hover::after{transform:translateX(120%)}
+.xbtn[disabled]{opacity:.4;cursor:not-allowed}
+.xrow{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 10px}
+.xrow .xbtn{position:static}
+/* district 3-year */
+.dg{display:flex;flex-direction:column;gap:8px}
+.dg .drow{display:grid;grid-template-columns:110px 1fr 84px;gap:2px 12px;align-items:center;padding:6px 8px;border-radius:14px;cursor:pointer;transition:background .2s,box-shadow .2s}
+.dg .drow:hover{background:rgba(56,189,248,.12)}
+.dg .drow.sel{background:rgba(37,99,235,.10);box-shadow:inset 0 0 0 1.5px rgba(37,99,235,.35)}
+.dg .drow.dim{opacity:.45}
+.dg .lbl{font-size:18.5px;font-weight:700}
+.dg .bars{display:flex;flex-direction:column;gap:2px}
+.dg .bar{height:8px;border-radius:0 5px 5px 0;min-width:2px;transform-origin:left;animation:growR .8s var(--ease) both}
+.dg .v{text-align:right;font-weight:700;color:var(--ink2);font-variant-numeric:tabular-nums;font-size:18px}
+.dg .v small{display:block;font-size:15px;font-weight:700}
+/* confirm dialog */
+.modal{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:rgba(11,31,77,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+.modal.open{display:grid;animation:fadeIn .2s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.mbox{width:min(520px,100%);max-width:100%;min-width:0;background:rgba(255,255,255,.92);border:1px solid #fff;border-radius:24px;padding:20px 22px;box-shadow:0 30px 80px -20px rgba(11,31,77,.55),0 0 0 4px rgba(56,189,248,.15);animation:rise .3s var(--ease) both;translate:0 10px}
+.mbox h3{margin:0 0 6px;font-size:28px;display:flex;align-items:center;gap:8px}
+.mbox .mf{font-size:18px;color:var(--ink2);line-height:1.4;overflow-wrap:anywhere}
+.mbox .mf b{color:var(--ink)}
+.mbox ul{margin:6px 0 0 0;padding-left:20px;font-size:17.5px;color:var(--ink2);max-height:200px;overflow:auto}
+.mact{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.btn.ghost{background:#fff;color:var(--ink2);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{background:#f1f5ff;transform:none}
+/* data-date badge */
+.live .dot{animation:none;background:#7dd3fc;box-shadow:0 0 10px 2px rgba(125,211,252,.9)}
+.live{text-shadow:0 0 12px rgba(125,211,252,.55)}
 /* responsive */
 .ftoggle,.fab,.mhint{display:none}
 .status .rows{color:var(--ink3)}
@@ -225,14 +262,14 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
   .lede{font-size:16.5px}
   .live{font-size:15px;padding:4px 12px}
   /* filters: compact sticky bar, expandable */
-  .filters{position:sticky;top:0;border-radius:0 0 20px 20px;margin:0 -8px 12px;padding:10px 12px;gap:8px}
+  .filters{position:static;padding:12px;gap:8px}
+  .filters .f:has(#selYear){flex:1 1 100%}
   .filters .f{flex:1 1 46%}
   .filters .f:first-child{flex:1 1 100%}
   .seg{display:flex}.seg button{flex:1;white-space:nowrap;padding:4px 10px}
-  .ftoggle{display:flex;flex:1 1 100%;justify-content:space-between;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.85);
+  .ftoggle{display:none;flex:1 1 100%;justify-content:space-between;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.85);
            border-radius:14px;padding:6px 12px;font:700 17px var(--font);color:var(--ink2);min-height:42px;cursor:pointer}
   .ftoggle .sum{font-weight:400;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
-  .filters.collapsed .f:not(:first-child),.filters.collapsed .status,.filters.collapsed .spacer{display:none}
   .filters .spacer{display:none}
   .filters .f:has(#btnXlsx){flex:1 1 100%}.filters .f:has(#btnXlsx) label{display:none}.btn{width:100%;justify-content:center}
   .status{font-size:15px}.status .rows{display:none}
@@ -241,7 +278,8 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
   .kpi{min-height:104px;padding:12px 12px;border-radius:20px}
   .kpi .l{font-size:16px;padding-right:28px}.kpi .s{font-size:15.5px}.kpi .emo{font-size:22px;right:10px;top:10px}
   .kpi .v{font-size:34px}.kpi .v.sm{font-size:22px}
-  .card{padding:14px 12px;border-radius:20px}.card h2{font-size:24px}.card h2 .emo{width:34px;height:34px;font-size:18px}
+  .card{padding:14px 12px;border-radius:20px}.card h2{padding-right:0}.xbtn{position:static;margin:2px 0 8px;font-size:16px}
+  .dg .drow{grid-template-columns:86px 1fr 70px;padding:6px 4px}.card h2{font-size:24px}.card h2 .emo{width:34px;height:34px;font-size:18px}
   .card .sub{font-size:15.5px}
   /* butterfly → stacked rows: name on top, male | female below */
   .bf{grid-template-columns:1fr;gap:0}
@@ -283,10 +321,10 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
     <h1>สาเหตุการป่วย <span class="hl">298 กลุ่มโรค</span></h1>
     <p class="lede">จังหวัดนครนายก · ผู้ป่วยนอก & ผู้ป่วยใน · ปีงบ 2567–2569 + ปีปัจจุบัน · แยกเพศ แยกอายุ แยกหน่วยบริการ</p>
   </div>
-  <div class="live"><span class="dot load" id="dot"></span><span id="badgeTxt">กำลังเชื่อมต่อ…</span></div>
+  <div class="live"><span class="dot load" id="dot"></span><span id="badgeTxt">กำลังโหลดข้อมูล…</span></div>
 </header>
 
-<div class="filters glass reveal collapsed" id="filters">
+<div class="filters glass reveal" id="filters">
   <div class="f"><label>ประเภทผู้ป่วย</label>
     <div class="seg" id="segType"><button data-v="opd" class="on">ผู้ป่วยนอก</button><button data-v="ipd">ผู้ป่วยใน</button></div></div>
   <button class="ftoggle" id="fToggle" aria-expanded="false" aria-controls="filters"><span>⚙ ตัวกรอง</span><span class="sum" id="fSum">…</span></button>
@@ -305,12 +343,14 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
 <div class="row2">
   <section class="card reveal">
     <h2><span class="emo">🔥</span><span id="tTop">อันดับกลุ่มโรค แยกชาย–หญิง</span></h2>
+    <button class="xbtn" data-x="top">⬇ Excel</button>
     <div class="sub" id="sTop"></div>
     <div class="legend"><span><i style="background:var(--male)"></i>ชาย</span><span><i style="background:var(--female)"></i>หญิง</span><span style="color:var(--ink3)">เรียงตามจำนวนรวม</span></div>
     <div class="bf" id="chTop"></div>
   </section>
   <section class="card reveal">
-    <h2><span class="emo">📈</span>เทียบ 3 ปีย้อนหลัง</h2>
+    <h2><span class="emo">📈</span><span id="tTrend">สาเหตุสูงสุด เทียบ 3 ปี</span></h2>
+    <button class="xbtn" data-x="trend">⬇ Excel</button>
     <div class="sub" id="sTrend"></div>
     <div class="legend" id="lgTrend"></div>
     <div class="yb" id="chTrend"></div>
@@ -318,7 +358,8 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
 </div>
 
 <section class="card reveal" style="margin-bottom:16px">
-  <h2><span class="emo">👶</span>แยกกลุ่มอายุ</h2>
+  <h2><span class="emo">👶</span>เพศและกลุ่มอายุ</h2>
+  <button class="xbtn" data-x="age">⬇ Excel</button>
   <div class="sub" id="sAge"></div>
   <div class="agehead">
     <div class="f"><label>ปีงบประมาณ (ข้อมูลกลุ่มอายุ)</label><select id="selAgeYear"></select></div>
@@ -330,19 +371,23 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
 <div class="row2b">
   <section class="card reveal">
     <h2><span class="emo">🗓️</span>จำนวนครั้งรวมรายปี</h2>
+    <button class="xbtn" data-x="years">⬇ Excel</button>
     <div class="sub">ทุกกลุ่มโรค ตามตัวกรองที่เลือก</div>
     <div class="sb" id="chYears"></div>
   </section>
   <section class="card reveal">
-    <h2><span class="emo">📍</span>รายอำเภอ</h2>
+    <h2><span class="emo">📍</span>รายอำเภอ เทียบ 3 ปี</h2>
+    <button class="xbtn" data-x="dist">⬇ Excel</button>
     <div class="sub" id="sDist"></div>
-    <div class="sb" id="chDist"></div>
+    <div class="legend" id="lgDist"></div><div class="dg" id="chDist"></div>
   </section>
 </div>
 
 <section class="card reveal">
   <h2><span class="emo">📋</span>ตารางกลุ่มโรคทั้งหมด</h2>
+  <button class="xbtn" data-x="all">⬇ Excel</button>
   <div class="sub">แตะหัวคอลัมน์เพื่อเรียงลำดับ · ข้อมูลเดียวกับที่ Export Excel<span class="mhint"> · ปัดตารางซ้าย–ขวาเพื่อดูคอลัมน์อื่น ↔</span></div>
+  <div class="xrow"><button class="xbtn" data-x="hosp">⬇ Excel รายหน่วยบริการ</button><button class="xbtn" data-x="raw">⬇ Excel ข้อมูลรายแถวตามตัวกรอง</button></div>
   <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
 </section>
 
@@ -359,6 +404,9 @@ footer .src{font-size:16px;color:#bfdbfe;text-align:right}
   <div class="src">ข้อมูล: MoPH Open Data · HDC กระทรวงสาธารณสุข</div>
 </footer>
 </div>
+<div class="modal" id="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgT"><div class="mbox">
+  <h3 id="dlgT">⬇ บันทึกไฟล์ Excel</h3><div class="mf" id="dlgBody"></div>
+  <div class="mact"><button class="btn ghost" id="dlgNo">ยกเลิก</button><button class="btn" id="dlgOk">บันทึกไฟล์</button></div></div></div>
 <button class="fab" id="fab" aria-label="ไปที่ตัวกรอง">⚙ ตัวกรอง</button>
 <div class="tip" id="tip"></div>
 <div class="toast" id="toast"></div>
@@ -488,7 +536,7 @@ const YEARS = [CURRENT_FY-3, CURRENT_FY-2, CURRENT_FY-1, CURRENT_FY];
 const BACK3 = YEARS.slice(0,3);
 const AGE_YEARS = [2567, 2568];
 const DIST = {'2601':'เมืองนครนายก','2602':'ปากพลี','2603':'บ้านนา','2604':'องครักษ์'};
-const HOS = {"10196": "รพ.สต.บ้านกะเหรี่ยง ต.เขาเพิ่ม", "10863": "โรงพยาบาลปากพลี", "10864": "โรงพยาบาลบ้านนา", "10698": "โรงพยาบาลนครนายก", "10865": "โรงพยาบาลองครักษ์", "11491": "โรงพยาบาลรร.นายร้อยพระจุลจอมเกล้า", "14904": "สุขศาลาศรีนครินทรวิโรฒ", "14302": "สถานีอนามัยเฉลิมพระเกียรติฯ ร.9 ต.ทรายมูล", "02394": "สถานีอนามัยเฉลิมพระเกียรติ 60 พรรษา นวมินทราชินี", "02386": "รพ.สต.บ้านคลองเหมือง ต.วังกระโจม", "02389": "รพ.สต.บ้านบางหอย ต.ศรีจุฬา", "02402": "รพ.สต.บ้านใหม่ ต.เกาะหวาย", "02403": "รพ.สต.บ้านสะแกซึง ต.เกาะโพธิ์", "02404": "รพ.สต.บ้านดงข่า ต.เกาะโพธิ์", "02405": "รพ.สต.บ้านพรหมเพชร ต.โคกกรวด", "02407": "รพ.สต.บ้านหนองหัวลิงใน ต.หนองแสง", "02408": "รพ.สต.บ้านบุ่งเข้ ต.หนองแสง", "02406": "รพ.สต.บ้านเกาะกา ต.ท่าเรือ", "02409": "รพ.สต.บ้านนาใหม่ ต.นาหินลาด", "02410": "รพ.สต.บ้านหนองรี ต.บ้านพร้าว", "02421": "รพ.สต.บ้านเขาน้อย ต.เขาเพิ่ม", "02431": "รพ.สต.บ้านบางนางเล็ก ต.ทรายมูล", "02422": "รพ.สต.บ้านละว้า ต.ศรีกะอาง", "02433": "รพ.สต.บ้านใน ต.บางลูกเสือ", "02412": "รพ.สต.บ้านหนองคันจาม ต.บ้านพริก", "10195": "รพ.สต.บ้านดง ต.สาริกา", "02419": "รพ.สต.บ้านกร่างประตูวัง ต.ป่าขะ", "02385": "รพ.สต.บ้านท่าข่อย ต.บ้านใหญ่", "02387": "รพ.สต.บ้านท่าทราย ต.ท่าทราย", "02388": "รพ.สต.บ้านชวดบัว ต.ดอนยอ", "02392": "รพ.สต.บ้านท่าแห ต.ดงละคร", "02393": "รพ.สต.บ้านศรีนาวา ต.ศรีนาวา", "02395": "รพ.สต.บ้านเขานางบวช ต.สาริกา", "02396": "รพ.สต.บ้านวังยายฉิม ต.หินตั้ง", "02397": "รพ.สต.บ้านเขาทุเรียน ต.เขาพระ", "02398": "รพ.สต.บ้านปากช่อง ต.เขาพระ", "02399": "รพ.สต.บ้านตอไม้แดง ต.พรหมณี", "02400": "รพ.สต.บ้านวังปลาจีด ต.พรหมณี", "02401": "รพ.สต.บ้านไผ่ล้อม ต.ปากพลี", "02413": "รพ.สต.บ้านพริก ต.บ้านพริก", "02416": "รพ.สต.บ้านคลอง 30 ต.ทองหลาง", "02417": "รพ.สต.บ้านบางอ้อ ต.บางอ้อ", "02418": "รพ.สต.บ้านแหลมไม้ย้อย ต.พิกุลออก", "02420": "รพ.สต.บ้านเขาเพิ่ม ต.เขาเพิ่ม", "02423": "รพ.สต.บ้านปากคลอง 22 ต.พระอาจารย์", "02424": "รพ.สต.บ้านบึงพระอาจารย์ ต.พระอาจารย์", "02426": "รพ.สต.บ้านคลอง 23 ฝั่งเหนือ ต.ศีรษะกระบือ", "02425": "รพ.สต.บ้านลาดช้าง ต.บึงศาล", "02427": "รพ.สต.บ้านคลอง 24 ฝั่งใต้ ต.ศีรษะกระบือ", "02432": "รพ.สต.บ้านบน ต.บางปลากด", "02434": "รพ.สต.บ้านทำนบ ต.ชุมพล", "02414": "รพ.สต.บ้านไผ่ขวาง ต.อาษา", "11601": "รพ.สต.บ้านปากกระทุ่ม ต.พรหมณี", "02384": "รพ.สต.บ้านเจดีย์ทอง ต.ท่าช้าง", "02391": "รพ.สต.บ้านหนองทองทราย ต.ดงละคร", "13825": "รพ.สต.บ้านคลอง 14 เหนือ ต.คลองใหญ่", "02411": "รพ.สต.บ้านทางกระบือ ต.บ้านพร้าว", "02428": "รพ.สต.บ้านเขมรฝั่งใต้ ต.โพธิ์แทน", "02429": "รพ.สต.บ้านเตยน้อย ต.บางสมบูรณ์", "02430": "รพ.สต.บ้านประตูน้ำบางสมบูรณ์ ต.บางสมบูรณ์", "02390": "รพ.สต.บ้านบางปรัง ต.ศรีจุฬา", "02415": "รพ.สต.บ้านทองหลาง ต.ทองหลาง"};
+const HOS = {"99842": "สุขศาลาศรีนครินทรวิโรฒ ต.คลองใหญ่", "10196": "รพ.สต.บ้านกะเหรี่ยง ต.เขาเพิ่ม", "10863": "โรงพยาบาลปากพลี", "10864": "โรงพยาบาลบ้านนา", "10698": "โรงพยาบาลนครนายก", "10865": "โรงพยาบาลองครักษ์", "11491": "โรงพยาบาลรร.นายร้อยพระจุลจอมเกล้า", "14904": "สุขศาลาศรีนครินทรวิโรฒ", "14302": "สถานีอนามัยเฉลิมพระเกียรติฯ ร.9 ต.ทรายมูล", "02394": "สถานีอนามัยเฉลิมพระเกียรติ 60 พรรษา นวมินทราชินี", "02386": "รพ.สต.บ้านคลองเหมือง ต.วังกระโจม", "02389": "รพ.สต.บ้านบางหอย ต.ศรีจุฬา", "02402": "รพ.สต.บ้านใหม่ ต.เกาะหวาย", "02403": "รพ.สต.บ้านสะแกซึง ต.เกาะโพธิ์", "02404": "รพ.สต.บ้านดงข่า ต.เกาะโพธิ์", "02405": "รพ.สต.บ้านพรหมเพชร ต.โคกกรวด", "02407": "รพ.สต.บ้านหนองหัวลิงใน ต.หนองแสง", "02408": "รพ.สต.บ้านบุ่งเข้ ต.หนองแสง", "02406": "รพ.สต.บ้านเกาะกา ต.ท่าเรือ", "02409": "รพ.สต.บ้านนาใหม่ ต.นาหินลาด", "02410": "รพ.สต.บ้านหนองรี ต.บ้านพร้าว", "02421": "รพ.สต.บ้านเขาน้อย ต.เขาเพิ่ม", "02431": "รพ.สต.บ้านบางนางเล็ก ต.ทรายมูล", "02422": "รพ.สต.บ้านละว้า ต.ศรีกะอาง", "02433": "รพ.สต.บ้านใน ต.บางลูกเสือ", "02412": "รพ.สต.บ้านหนองคันจาม ต.บ้านพริก", "10195": "รพ.สต.บ้านดง ต.สาริกา", "02419": "รพ.สต.บ้านกร่างประตูวัง ต.ป่าขะ", "02385": "รพ.สต.บ้านท่าข่อย ต.บ้านใหญ่", "02387": "รพ.สต.บ้านท่าทราย ต.ท่าทราย", "02388": "รพ.สต.บ้านชวดบัว ต.ดอนยอ", "02392": "รพ.สต.บ้านท่าแห ต.ดงละคร", "02393": "รพ.สต.บ้านศรีนาวา ต.ศรีนาวา", "02395": "รพ.สต.บ้านเขานางบวช ต.สาริกา", "02396": "รพ.สต.บ้านวังยายฉิม ต.หินตั้ง", "02397": "รพ.สต.บ้านเขาทุเรียน ต.เขาพระ", "02398": "รพ.สต.บ้านปากช่อง ต.เขาพระ", "02399": "รพ.สต.บ้านตอไม้แดง ต.พรหมณี", "02400": "รพ.สต.บ้านวังปลาจีด ต.พรหมณี", "02401": "รพ.สต.บ้านไผ่ล้อม ต.ปากพลี", "02413": "รพ.สต.บ้านพริก ต.บ้านพริก", "02416": "รพ.สต.บ้านคลอง 30 ต.ทองหลาง", "02417": "รพ.สต.บ้านบางอ้อ ต.บางอ้อ", "02418": "รพ.สต.บ้านแหลมไม้ย้อย ต.พิกุลออก", "02420": "รพ.สต.บ้านเขาเพิ่ม ต.เขาเพิ่ม", "02423": "รพ.สต.บ้านปากคลอง 22 ต.พระอาจารย์", "02424": "รพ.สต.บ้านบึงพระอาจารย์ ต.พระอาจารย์", "02426": "รพ.สต.บ้านคลอง 23 ฝั่งเหนือ ต.ศีรษะกระบือ", "02425": "รพ.สต.บ้านลาดช้าง ต.บึงศาล", "02427": "รพ.สต.บ้านคลอง 24 ฝั่งใต้ ต.ศีรษะกระบือ", "02432": "รพ.สต.บ้านบน ต.บางปลากด", "02434": "รพ.สต.บ้านทำนบ ต.ชุมพล", "02414": "รพ.สต.บ้านไผ่ขวาง ต.อาษา", "11601": "รพ.สต.บ้านปากกระทุ่ม ต.พรหมณี", "02384": "รพ.สต.บ้านเจดีย์ทอง ต.ท่าช้าง", "02391": "รพ.สต.บ้านหนองทองทราย ต.ดงละคร", "13825": "รพ.สต.บ้านคลอง 14 เหนือ ต.คลองใหญ่", "02411": "รพ.สต.บ้านทางกระบือ ต.บ้านพร้าว", "02428": "รพ.สต.บ้านเขมรฝั่งใต้ ต.โพธิ์แทน", "02429": "รพ.สต.บ้านเตยน้อย ต.บางสมบูรณ์", "02430": "รพ.สต.บ้านประตูน้ำบางสมบูรณ์ ต.บางสมบูรณ์", "02390": "รพ.สต.บ้านบางปรัง ต.ศรีจุฬา", "02415": "รพ.สต.บ้านทองหลาง ต.ทองหลาง"};
 const hname = h => HOS[h] || ('หน่วยบริการ '+h);
 const TH_MON = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
@@ -594,7 +642,7 @@ function setupControls(){
   $('selSex').onchange=e=>{state.sex=e.target.value;render()};
   $('selTop').onchange=e=>{state.top=+e.target.value;render()};
   $('selAgeYear').onchange=e=>{state.ageYear=+e.target.value;renderAge()};
-  $('btnXlsx').onclick=exportXlsx;
+  $('btnXlsx').onclick=()=>exportXlsx();
 }
 function fillHosp(){
   const m=new Map();
@@ -611,7 +659,7 @@ async function load(){
   if(!cache[state.type]){ st.textContent=`กำลังดึงข้อมูล${typeTh(state.type)} ปีงบประมาณ ${YEARS.join(', ')} …`; setBadge('load','กำลังดึงข้อมูล…'); $('btnXlsx').disabled=true; }
   try{ await ensure(state.type); }
   catch(err){ st.className='status err'; st.textContent='ดึงข้อมูลไม่สำเร็จ ('+err.message+') — ตรวจสอบอินเทอร์เน็ต แล้วโหลดหน้าใหม่'; setBadge('err','เชื่อมต่อไม่สำเร็จ'); return; }
-  setBadge('','LIVE · MoPH Open Data'); $('btnXlsx').disabled=false;
+   $('btnXlsx').disabled=false;
   fillHosp(); render();
   ensureAge(state.type).then(renderAge).catch(()=>{ $('ageBody').innerHTML='<div class="na">ดึงข้อมูลกลุ่มอายุไม่สำเร็จ</div>'; });
 }
@@ -641,6 +689,7 @@ function render(){
   const where=whereTxt();
   $('status').innerHTML=`${typeTh(T)} · ปีงบประมาณ ${Y} · ${esc(where)}${dc?' · ประมวลผลล่าสุด '+thDate(dc):''}<span class="rows"> · ${YEARS.map(y=>y+': '+fmt((cache[T][y]||[]).length)+' แถว').join('  ')}</span>`;
   updateFilterSummary();
+  if(dc) setBadge('','ข้อมูล ณ '+thDate(dc));
   const male=ranked.reduce((a,o)=>a+o.m,0), fem=ranked.reduce((a,o)=>a+o.f,0);
   const chg = (Y!==CURRENT_FY && totalPrev) ? pct(total,totalPrev) : null;
   const top1=ranked[0];
@@ -667,7 +716,7 @@ function render(){
     : '<div class="empty" style="grid-column:1/-1">ไม่พบข้อมูลตามตัวกรอง</div>';
 
   /* 3-year trend */
-  const tG=ranked.slice(0,Math.min(state.top,12)); const yc=['var(--y1)','var(--y2)','var(--y3)'];
+  const tG=ranked.slice(0,state.top); $('tTrend').textContent=`${state.top} สาเหตุสูงสุด เทียบ 3 ปี`; const yc=['var(--y1)','var(--y2)','var(--y3)'];
   $('sTrend').textContent=`${tG.length} อันดับแรกของปี ${Y} · ${where} · % = ${BACK3[2]} เทียบ ${BACK3[0]}`;
   $('lgTrend').innerHTML=BACK3.map((y,i)=>`<span><i style="background:${yc[i]}"></i>${y}</span>`).join('');
   let mx=1; tG.forEach(o=>BACK3.forEach(y=>{mx=Math.max(mx,(gy[y].get(o.g)||{t:0}).t)}));
@@ -682,12 +731,21 @@ function render(){
   $('chYears').innerHTML=yt.map(([y,x])=>`<div class="lbl">${y}${y===CURRENT_FY?' <span style="color:var(--ink3)">(บางส่วน)</span>':''}</div>
     <div class="t" style="width:${x/myt*100}%;background:${y===CURRENT_FY?'var(--ycur)':'var(--y3)'}" data-tip="${esc(`<b>ปีงบประมาณ ${y}</b><br>${fmt(x)} ครั้ง`)}"></div><div class="v">${fmt(x)}</div>`).join('');
 
-  /* districts */
-  const dm={}; for(const x of (cache[T][Y]||[])) if(state.sex==='all'||x.s===state.sex){ const k=DIST[x.a]?x.a:'other'; dm[k]=(dm[k]||0)+x.n; }
-  const dl=Object.entries(dm).sort((a,b)=>b[1]-a[1]), md=Math.max(1,...dl.map(a=>a[1])), dt=dl.reduce((a,b)=>a+b[1],0);
-  $('sDist').textContent=`ปีงบประมาณ ${Y} · ทุกกลุ่มโรค${state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):''}${state.dist!=='all'?' · อำเภอที่เลือกเน้นสีสว่าง':''}`;
-  $('chDist').innerHTML=dl.map(([k,x])=>`<div class="lbl">${k==='other'?'ไม่ระบุ':DIST[k]}</div>
-    <div class="t" style="width:${x/md*100}%;background:${state.dist==='all'||state.dist===k?'var(--y3)':'var(--y1)'}" data-tip="${esc(`<b>${k==='other'?'ไม่ระบุอำเภอ':'อ.'+DIST[k]}</b><br>${fmt(x)} ครั้ง · ${(x/dt*100).toFixed(1)}%`)}"></div><div class="v">${fmt(x)}</div>`).join('');
+  /* districts × 3 years (tap to filter whole page) */
+  const dsum={}; for(const y of BACK3){ for(const x of (cache[T][y]||[])) if(state.sex==='all'||x.s===state.sex){ const k=DIST[x.a]?x.a:'other'; (dsum[k]=dsum[k]||{})[y]=((dsum[k]||{})[y]||0)+x.n; } }
+  const dkeys=Object.keys(dsum).sort((p,q)=>(dsum[q][BACK3[2]]||0)-(dsum[p][BACK3[2]]||0));
+  const mdx=Math.max(1,...dkeys.flatMap(k=>BACK3.map(y=>dsum[k][y]||0)));
+  $('sDist').textContent=`ปีงบประมาณ ${BACK3.join(', ')} · ทุกกลุ่มโรค${state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):''} · แตะแถวเพื่อกรองทั้งหน้าตามอำเภอ${state.dist!=='all'?' (แตะซ้ำเพื่อยกเลิก)':''}`;
+  $('lgDist').innerHTML=BACK3.map((y,i)=>`<span><i style="background:${yc[i]}"></i>${y}</span>`).join('');
+  $('chDist').innerHTML=dkeys.map(k=>{ const vals=BACK3.map(y=>dsum[k][y]||0), c=pct(vals[2],vals[0]); const nm=k==='other'?'ไม่ระบุ':DIST[k];
+    const tp=esc(`<b>${k==='other'?'ไม่ระบุอำเภอ':'อ.'+nm}</b><br>`+BACK3.map((y,i)=>`${y}: ${fmt(vals[i])} ครั้ง`).join('<br>')+(c==null?'':`<br>${BACK3[0]}→${BACK3[2]}: ${c>=0?'+':''}${c.toFixed(1)}%`)+(k==='other'?'':'<br><i>แตะเพื่อกรองทั้งหน้า</i>'));
+    const cls=state.dist===k?'sel':(state.dist!=='all'?'dim':'');
+    return `<div class="drow ${cls}" data-dist="${k}" data-tip="${tp}" role="button" tabindex="0"><div class="lbl">${nm}</div>
+      <div class="bars">${vals.map((x,i)=>`<div class="bar" style="width:${x/mdx*100}%;background:${yc[i]}"></div>`).join('')}</div>
+      <div class="v">${fmt(vals[2])}<small class="${c==null?'':c>=0?'up':'down'}">${c==null?'':(c>=0?'▲ ':'▼ ')+Math.abs(c).toFixed(1)+'%'}</small></div></div>`; }).join('');
+  $('chDist').querySelectorAll('.drow').forEach(el=>{ const go=()=>{ const k=el.dataset.dist; if(k==='other') return;
+      state.dist = state.dist===k ? 'all' : k; state.hosp='all'; $('selDist').value=state.dist; fillHosp(); tip.style.display='none'; render(); };
+    el.onclick=e=>{ e.stopPropagation(); go(); }; el.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
 
   renderTable(); renderAge();
 }
@@ -800,16 +858,16 @@ function buildWorkbook(){
   const r2=n=>n==null?null:Math.round(n*100)/100;
   const male=v.ranked.reduce((a,o)=>a+o.m,0), fem=v.ranked.reduce((a,o)=>a+o.f,0);
   const sheets=[];
-  sheets.push({name:'สรุป',title:'สรุปสาเหตุการป่วยตาม 298 กลุ่มโรค จังหวัดนครนายก',notes,header:['รายการ','ค่า'],widths:[44,40],rows:[
+  sheets.push({key:'summary',name:'สรุป',title:'สรุปสาเหตุการป่วยตาม 298 กลุ่มโรค จังหวัดนครนายก',notes,header:['รายการ','ค่า'],widths:[44,40],rows:[
     ['ประเภทผู้ป่วย',typeTh(T)],['ปีงบประมาณ',Y],['พื้นที่/ตัวกรอง',where],['จำนวนครั้งรวม',v.total],
     ['จำนวนครั้งรวมปีก่อน ('+(Y-1)+')',v.totalPrev??''],['% เปลี่ยนแปลงเทียบปีก่อน',(Y!==CURRENT_FY&&v.totalPrev)?r2(pct(v.total,v.totalPrev)):'ไม่คำนวณ (ปีปัจจุบัน)'],
     ['ชาย',male],['หญิง',fem],['จำนวนกลุ่มโรคที่พบ',v.ranked.length],['จำนวนหน่วยบริการที่ส่งข้อมูล',v.hospN],
     ['อันดับ 1',v.ranked[0]?pad(v.ranked[0].g)+' '+gname(v.ranked[0].g):'']]});
-  sheets.push({name:`${state.top} อันดับ`,title:`${state.top} อันดับกลุ่มโรค${typeTh(T)} ปีงบประมาณ ${Y}`,notes,
+  sheets.push({key:'top',name:`${state.top} อันดับ`,title:`${state.top} อันดับกลุ่มโรค${typeTh(T)} ปีงบประมาณ ${Y}`,notes,
     header:['อันดับ','รหัส','กลุ่มโรค','Disease group (WHO)','ชาย','หญิง','รวม','ร้อยละ','% ชาย','% หญิง',String(BACK3[0]),String(BACK3[1]),String(BACK3[2]),`% เปลี่ยนแปลง ${BACK3[0]}→${BACK3[2]}`],
     widths:[7,7,48,42,10,10,11,9,9,9,11,11,11,14],dec:new Set([7,8,9,13]),
     rows:sorted.filter(r=>r.rank&&r.rank<=state.top).sort((a,b)=>a.rank-b.rank).map(r=>[r.rank,pad(r.g),r.name,r.en,r.m,r.f,r.cur,r2(r.share),r.cur?r2(r.m/r.cur*100):null,r.cur?r2(r.f/r.cur*100):null,r.y0,r.y1,r.y2,r2(r.chg)])});
-  sheets.push({name:'ทุกกลุ่มโรค',title:`ทุกกลุ่มโรค${typeTh(T)} (เรียงตามปี ${Y})`,notes,
+  sheets.push({key:'all',name:'ทุกกลุ่มโรค',title:`ทุกกลุ่มโรค${typeTh(T)} (เรียงตามปี ${Y})`,notes,
     header:['อันดับ','รหัส','กลุ่มโรค','Disease group (WHO)','ชาย','หญิง',`รวม ${Y}`,'ร้อยละ',String(BACK3[0]),String(BACK3[1]),String(BACK3[2]),`% เปลี่ยนแปลง ${BACK3[0]}→${BACK3[2]}`],
     widths:[7,7,48,42,10,10,11,9,11,11,11,14],dec:new Set([7,11]),
     rows:sorted.map(r=>[r.rank,pad(r.g),r.name,r.en,r.m,r.f,r.cur,r2(r.share),r.y0,r.y1,r.y2,r2(r.chg)])});
@@ -818,7 +876,7 @@ function buildWorkbook(){
   const dRows=(cache[T][Y]||[]).filter(x=>state.sex==='all'||x.s===state.sex);
   const dm={}; for(const x of dRows){ const k=DIST[x.a]?x.a:'other'; (dm[k]=dm[k]||{})[x.g]=(dm[k][x.g]||0)+x.n; }
   const dk=Object.keys(DIST).concat(dm.other?['other']:[]);
-  sheets.push({name:'รายอำเภอ',title:`จำนวนครั้งรายอำเภอ × ${state.top} อันดับกลุ่มโรค ปี ${Y}`,notes:[notes[0].replace(where,'ทั้งจังหวัด'+(state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):'')),notes[1]],
+  sheets.push({key:'distgrp',name:'รายอำเภอ × กลุ่มโรค',title:`จำนวนครั้งรายอำเภอ × ${state.top} อันดับกลุ่มโรค ปี ${Y}`,notes:[notes[0].replace(where,'ทั้งจังหวัด'+(state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):'')),notes[1]],
     header:['รหัส','กลุ่มโรค',...dk.map(k=>k==='other'?'ไม่ระบุ':DIST[k]),'รวม'],widths:[7,48,...dk.map(()=>14),12],
     rows:topG.map(g=>{const vals=dk.map(k=>(dm[k]||{})[g]||0);return [pad(g),gname(g),...vals,vals.reduce((a,b)=>a+b,0)]})
       .concat([['','รวมทุกกลุ่มโรค',...dk.map(k=>Object.values(dm[k]||{}).reduce((a,b)=>a+b,0)),dRows.reduce((a,x)=>a+x.n,0)]])});
@@ -828,30 +886,63 @@ function buildWorkbook(){
     const gs=[...new Set([...a.kids.map(o=>o.g),...(partial?[]:[...adm.keys()])])];
     const rows=gs.map(g=>{const k=km.get(g)||{m:0,f:0,t:0}, d=adm.get(g)||{m:0,f:0,t:0}; return partial?[pad(g),gname(g),k.m,k.f,k.t]:[pad(g),gname(g),k.m,k.f,k.t,d.m,d.f,d.t,k.t+d.t];})
       .sort((p,q)=>q[q.length-1]-p[p.length-1]);
-    sheets.push({name:'กลุ่มอายุ',title:`แยกกลุ่มอายุ ${typeTh(T)} ปีงบประมาณ ${a.Y}${partial?' (บางส่วน)':''}`,
+    sheets.push({key:'age',name:'กลุ่มอายุ',title:`แยกกลุ่มอายุ ${typeTh(T)} ปีงบประมาณ ${a.Y}${partial?' (บางส่วน)':''}`,
       notes:[`${typeTh(T)} · ${where}`,`แหล่งข้อมูล: ตาราง ${AGE_TABLES[T]} (อายุ ≤ 15 ปี) · อายุ > 15 ปี = ทุกอายุ − ≤ 15 ปี · ข้อมูลกลุ่มอายุประมวลผลถึง ${thDate(a.dcK)}`],
       header:partial?['รหัส','กลุ่มโรค','≤15 ชาย','≤15 หญิง','≤15 รวม']:['รหัส','กลุ่มโรค','≤15 ชาย','≤15 หญิง','≤15 รวม','>15 ชาย','>15 หญิง','>15 รวม','รวมทุกอายุ'],
       widths:[7,48,10,10,10,10,10,11,12],rows}); }
+  // trend: top N × 3 years
+  sheets.push({key:'trend',name:`${state.top} สาเหตุ เทียบ 3 ปี`,title:`${state.top} สาเหตุสูงสุด${typeTh(T)} (ตามปี ${Y}) เทียบ 3 ปี`,notes,
+    header:['อันดับ','รหัส','กลุ่มโรค',String(BACK3[0]),String(BACK3[1]),String(BACK3[2]),`% เปลี่ยนแปลง ${BACK3[0]}→${BACK3[2]}`],widths:[7,7,48,12,12,12,16],dec:new Set([6]),
+    rows:sorted.filter(r=>r.rank&&r.rank<=state.top).sort((a,b)=>a.rank-b.rank).map(r=>[r.rank,pad(r.g),r.name,r.y0,r.y1,r.y2,r2(r.chg)])});
+  // year totals
+  sheets.push({key:'years',name:'รวมรายปี',title:`จำนวนครั้งรวม${typeTh(T)} รายปีงบประมาณ`,notes:[notes[0].replace('ปีงบประมาณ '+Y+' · ',''),notes[1]],
+    header:['ปีงบประมาณ','ชาย','หญิง','รวม','หมายเหตุ'],widths:[12,12,12,13,26],
+    rows:YEARS.map(y=>{ const rr=filtered(cache,T,y); const m=rr.filter(x=>x.s==='1').reduce((a,x)=>a+x.n,0), fm=rr.filter(x=>x.s==='2').reduce((a,x)=>a+x.n,0); return [y,m,fm,m+fm,y===CURRENT_FY?'ปีปัจจุบัน ข้อมูลบางส่วน':'']; })});
+  // district × 3 years
+  { const ds={}; for(const y of BACK3) for(const x of (cache[T][y]||[])) if(state.sex==='all'||x.s===state.sex){ const k=DIST[x.a]?x.a:'other'; (ds[k]=ds[k]||{})[y]=((ds[k]||{})[y]||0)+x.n; }
+    sheets.push({key:'dist',name:'รายอำเภอ 3 ปี',title:`จำนวนครั้ง${typeTh(T)} รายอำเภอ เทียบ 3 ปี`,notes:[`${typeTh(T)} · ทุกอำเภอ${state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):''} · ทุกกลุ่มโรค`,notes[1]],
+      header:['อำเภอ',String(BACK3[0]),String(BACK3[1]),String(BACK3[2]),`% เปลี่ยนแปลง ${BACK3[0]}→${BACK3[2]}`],widths:[18,12,12,12,16],dec:new Set([4]),
+      rows:Object.keys(ds).sort((p,q)=>(ds[q][BACK3[2]]||0)-(ds[p][BACK3[2]]||0)).map(k=>{ const v=BACK3.map(y=>ds[k][y]||0); return [k==='other'?'ไม่ระบุ':DIST[k],...v,r2(pct(v[2],v[0]))]; })}); }
   // hospitals
   { const hm=new Map(); for(const x of (cache[T][Y]||[])){ if(state.dist!=='all'&&x.a!==state.dist) continue; if(state.sex!=='all'&&x.s!==state.sex) continue;
       let o=hm.get(x.h); if(!o){o={h:x.h,a:x.a,m:0,f:0,t:0,g:new Map()};hm.set(x.h,o)} if(x.s==='1')o.m+=x.n; else if(x.s==='2')o.f+=x.n; o.t+=x.n; o.g.set(x.g,(o.g.get(x.g)||0)+x.n); }
     const hr=[...hm.values()].sort((a,b)=>b.t-a.t).map(o=>{ const tg=[...o.g.entries()].sort((a,b)=>b[1]-a[1])[0]||[0,0]; return [o.h,hname(o.h),DIST[o.a]||o.a,o.m,o.f,o.t,tg[0]?pad(tg[0])+' '+gname(tg[0]):'',tg[1]]; });
-    sheets.push({name:'รายหน่วยบริการ',title:`จำนวนครั้งรายหน่วยบริการ ปี ${Y}`,notes:[`${typeTh(T)} · ปีงบประมาณ ${Y} · ${(state.dist==='all'?'ทั้งจังหวัด':'อ.'+DIST[state.dist])+(state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):'')}`,notes[1]],
+    sheets.push({key:'hosp',name:'รายหน่วยบริการ',title:`จำนวนครั้งรายหน่วยบริการ ปี ${Y}`,notes:[`${typeTh(T)} · ปีงบประมาณ ${Y} · ${(state.dist==='all'?'ทั้งจังหวัด':'อ.'+DIST[state.dist])+(state.sex!=='all'?(state.sex==='1'?' · ชาย':' · หญิง'):'')}`,notes[1]],
       header:['รหัส','ชื่อหน่วยบริการ','อำเภอ','ชาย','หญิง','รวม','กลุ่มโรคอันดับ 1','จำนวนครั้ง (อันดับ 1)'],widths:[9,42,14,11,11,12,48,14],rows:hr}); }
   // raw
   const raw=[]; for(const y of YEARS) for(const x of filtered(cache,T,y)) raw.push([y,x.h,hname(x.h),DIST[x.a]||x.a,x.s==='1'?'ชาย':x.s==='2'?'หญิง':x.s,pad(x.g),gname(x.g),x.n]);
-  sheets.push({name:'ข้อมูลดิบ',title:`ข้อมูลดิบ ${TABLES[T]} ปี ${YEARS.join(', ')}`,notes:[notes[0].replace('ปีงบประมาณ '+Y+' · ',''),notes[1]],
+  sheets.push({key:'raw',name:'ข้อมูลรายแถว',title:`ข้อมูลดิบ ${TABLES[T]} ปี ${YEARS.join(', ')}`,notes:[notes[0].replace('ปีงบประมาณ '+Y+' · ',''),notes[1]],
     header:['ปีงบประมาณ','รหัสหน่วยบริการ','ชื่อหน่วยบริการ','อำเภอ','เพศ','รหัสกลุ่มโรค','กลุ่มโรค','จำนวนครั้ง'],widths:[11,13,40,14,7,11,48,11],rows:raw});
   return sheets;
 }
-function exportXlsx(){
-  try{
-    const blob=XL.build(buildWorkbook());
-    const name=`NYK_${state.type.toUpperCase()}_298groups_FY${state.year}${state.dist!=='all'?'_'+state.dist:''}${state.sex!=='all'?(state.sex==='1'?'_male':'_female'):''}.xlsx`;
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(a.href),2000); toast('ส่งออกไฟล์ '+name+' แล้ว');
-  }catch(e){ toast('ส่งออกไม่สำเร็จ: '+e.message); }
+const XLABEL={top:'อันดับแยกชาย–หญิง',trend:'สาเหตุสูงสุด เทียบ 3 ปี',age:'กลุ่มอายุ',years:'รวมรายปี',dist:'รายอำเภอ เทียบ 3 ปี',all:'ทุกกลุ่มโรค',hosp:'รายหน่วยบริการ',raw:'ข้อมูลรายแถวตามตัวกรอง'};
+let pending=null;
+function exportXlsx(key){
+  if(!cache[state.type]){ toast('ยังโหลดข้อมูลไม่เสร็จ'); return; }
+  let sheets;
+  try{ sheets=buildWorkbook(); }catch(e){ toast('เตรียมไฟล์ไม่สำเร็จ: '+e.message); return; }
+  if(key){ sheets=sheets.filter(s=>s.key===key); if(!sheets.length){ toast('ยังไม่มีข้อมูลสำหรับส่วนนี้'); return; } }
+  const part = key ? '_'+key : '_all';
+  const name=`NYK_${state.type.toUpperCase()}_298groups_FY${state.year}${part}${state.dist!=='all'?'_'+state.dist:''}${state.hosp!=='all'?'_'+state.hosp:''}${state.sex!=='all'?(state.sex==='1'?'_male':'_female'):''}.xlsx`;
+  const rows=sheets.reduce((a,s)=>a+s.rows.length,0);
+  $('dlgBody').innerHTML=`ไฟล์: <b>${esc(name)}</b><br>ข้อมูล: <b>${esc(key?XLABEL[key]:'ทุกส่วน (ทุกชีต)')}</b> · ${fmt(rows)} แถว<br>ตัวกรอง: ${esc(typeTh(state.type)+' · ปีงบประมาณ '+state.year+' · '+whereTxt())}
+    <ul>${sheets.map(s=>`<li>ชีต “${esc(s.name)}” · ${fmt(s.rows.length)} แถว</li>`).join('')}</ul>`;
+  pending={sheets,name};
+  $('dlg').classList.add('open'); $('dlgOk').focus();
 }
+function closeDlg(){ $('dlg').classList.remove('open'); pending=null; }
+$('dlgNo').onclick=closeDlg;
+$('dlg').addEventListener('click',e=>{ if(e.target.id==='dlg') closeDlg(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape' && $('dlg').classList.contains('open')) closeDlg(); });
+$('dlgOk').onclick=()=>{
+  if(!pending) return; const {sheets,name}=pending; closeDlg();
+  try{
+    const blob=XL.build(sheets);
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),2000); toast('บันทึกไฟล์ '+name+' แล้ว');
+  }catch(e){ toast('ส่งออกไม่สำเร็จ: '+e.message); }
+};
+document.querySelectorAll('.xbtn[data-x]').forEach(b=>b.onclick=()=>exportXlsx(b.dataset.x));
 
 setupControls();
 load();
